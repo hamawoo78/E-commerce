@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Item Edit
+{% endblock %}
+
+{% block main %}
+<!-- <form action="/edit/{{ item.id }}" method="post"> -->
+<form action="/edit/{{ item[0].id }}" method="post" onsubmit="return validateForm()">
+
+    <h1>New Item Information</h1>
+        <div class="mb-3" id = "edit_img">
+            <img src="{{ item[0].itemPictureURL }}" alt="{{ item[0].itemname }}"/>
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Item Name" type="text" value="{{ item[0].itemname }}">
+            <p id = "require_title"></p>
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="picture" name="picture" placeholder="Enter image URL" type="text" value="{{ item[0].itemPictureURL }}">
+            <p id = "require_picture"></p>
+        </div>
+
+        <div class="mb-3">
+            <div class="select-type">
+                <label for="type">Select Item Type</label>
+                <select name="type" id="type">
+                    <option>-- SELECT --</option>
+                    {% for type in itemType %}
+                        <option value="{{ type }}">{{ type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <p id = "require_type"></p>
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="cost" name="cost" placeholder="Cost" type="tel" value="{{ item[0].itemCost }}">
+            <p id = "require_cost"></p>
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="description" name="description" placeholder="Item Description" type="text" value="{{ item[0].itemDescription }}">
+            <p id = "require_des"></p>
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" id="URL" name="URL" placeholder="URL" type="text" value="{{ item[0].itemURL }}">
+            <p id = "require_URL"></p>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id = "update">Update</button>
+
+
+
+    <p>Change an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+</form>
+<script>
+    function validateForm() {
+        let isFormValid = true;
+
+        if (document.getElementById("title").value === "") {
+            document.getElementById("require_title").textContent = "Title is required";
+            isFormValid = false;
+        }
+
+        if (document.getElementById("picture").value === "") {
+            document.getElementById("require_picture").textContent = "Picture is required";
+            isFormValid = false;
+        }
+
+        if (document.getElementById("type").value === "-- SELECT --") {
+            document.getElementById("require_type").textContent = "Item type is required";
+            isFormValid = false;
+        }
+
+        if (document.getElementById("cost").value === "") {
+            document.getElementById("require_cost").textContent = "Cost is required";
+            isFormValid = false;
+        }
+
+        if (document.getElementById("description").value === "") {
+            document.getElementById("require_des").textContent = "Description is required";
+            isFormValid = false;
+        }
+
+        if (document.getElementById("URL").value === "") {
+            document.getElementById("require_URL").textContent = "URL is required";
+            isFormValid = false;
+        }
+        return isFormValid;
+    };
+</script>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    All Items
+{% endblock %}
+
+{% block main %}
+<div id ="sort_option">
+<!-- 
+    <div class="checkbox-container">
+        {% for type in itemTypeName %}
+        <div class="checkbox-item">
+            <form action="/sort/{{ type.itemTypeName }}" method="POST">
+                <input type="checkbox" id="{{ type['id'] }}" name="Filter" value="{{ type['itemTypeName'] }}">
+                <label for="{{ type['id'] }}">{{ type['itemTypeName'] }}</label>
+        </div>
+        {% endfor %}
+        <button class="btn btn-outline-info btn-sm" data-source="1" type="submit">
+            <i class="fa fa-pen fa-1" aria-hidden="true"> Filter </i>
+        </button>
+        </form>
+    </div> -->
+        <div class="sort-container">
+        <form action="/sort/cost" method="POST">
+            <button class="btn btn-outline-info btn-sm" data-source="1" type="submit">
+                <i class="fa fa-pen fa-1" aria-hidden="true"> sort by cost</i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        {% for row in allItems %}
+        <div class="col">
+            <div class="item">
+                <div id ="item_pic_frame">
+                    <a href="/detail/{{ row['id'] }}">
+                        <img src="{{row['itemPictureURL']}}" alt="{{ row['itemname'] }}">
+                    </a>
+                </div>
+
+                <div class="item-details">
+                    <p class="item-name">{{ row['itemname'] }}</p>
+                    <p class="item-cost">${{row["itemCost"]}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

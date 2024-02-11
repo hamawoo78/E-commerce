@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Item Detail
+{% endblock %}
+
+{% block main %}
+    <tbody>
+        <form action="/detail/{{ item[0].id }}" method="get">
+        <div class="container_detail">
+            <div class="picture">
+              <div class="col_picture">
+                <img src="{{ item[0].itemPictureURL }}" alt="{{ item[0].itemname }}"/>
+              </div>
+            </div>
+            <div class="item_info">
+                <div class="info">
+                    <p class="item-name">{{item[0].itemname }}</p>
+                    <p>{{Type}} item</p>
+                    <p class="item-cost">${{item[0].itemCost}}</p>
+                    <p>{{item[0].itemDescription}}</p>
+                    <p hidden id = "itemURL">{{item[0].itemURL}}</p>
+                    <input type="button" value="Buy This Items!" id="buy" />
+                </div>
+              </div>
+            </div>
+        </form>
+        <script>
+            document.getElementById("buy").addEventListener("click", function () {
+                let itemURL = document.getElementById("itemURL").textContent;
+                window.open(itemURL);
+            });
+        </script>
+    </tbody>
+{% endblock %}

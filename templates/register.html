@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" method="post" onsubmit = "return validateForm()">
+        <h1>Registration</h1>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+                <p id = "require_username"></p>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Passwor" type="password">
+                <p id = "require_password"></p>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Password(again)" type="password">
+                <p id = "require_confirmation"></p>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Register</button>
+
+		</form>
+		<p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+    </form>
+    <script>
+        function validateForm(){
+            let isFormValid = true;
+            if (document.getElementById("username").value === ""){
+                document.getElementById("require_username").textContent = "username is required";
+                isFormValid = false;
+            }
+            if (document.getElementById("password").value === ""){
+                document.getElementById("require_password").textContent = "password is required";
+                isFormValid = false;
+            }
+            if (document.getElementById("confirmation").value === ""){
+                document.getElementById("require_confirmation").textContent = "password is required";
+                isFormValid = false;
+            }
+            return isFormValid;
+        };
+    </script>
+
+
+{% endblock %}

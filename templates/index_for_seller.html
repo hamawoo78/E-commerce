@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Your Items
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-start">Items</th>
+                <th class="text-start">Name</th>
+                <th class="text-start">Cost</th>
+                <th class="text-start">Edit</th>
+                <th class="text-start">Remove</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in allItems %}
+            <tr>
+                <td class="text-start" id ="index_picture"><a href="/detail/{{ row['id'] }}"><img src="{{row['itemPictureURL']}}" alt="{{ row['itemname'] }}"/></a></td>
+                <td class="text-start">{{ row['itemname'] }}</td>
+                <td class="text-start">${{row['itemCost']}}</td>
+                <td class="text-start">
+                    <a href="/edit/{{ row['id'] }}">
+                        <button class="btn btn-outline-info btn-sm" data-source="1" type="submit" id="ButtonEdit">
+                            <img src="{{ url_for('static', filename='images/edit.png') }}" alt="">
+                        </button>
+                    </a>
+                </td>
+                <td class="text-start">
+                    <div class="remove">
+                        <button class="btn btn-outline-secondary btn-sm" type="submit" id="ButtonRemove">
+                            <img src="{{ url_for('static', filename='images/remove-icon-png-7131.png') }}" alt="">
+                        </button>
+                    </div>
+
+                    <div class = "confirmation_div">
+                        <form action="/delete" method="post" >
+                            <input name = "id" type = "hidden"  value="{{ row['id'] }}">
+                            <button class="btn btn-outline-secondary btn-sm" name="confirmation" value="yes" type="submit">Yes</button>
+                            <button class="btn btn-outline-secondary btn-sm" name="confirmation" value="no" >No</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tr>
+            <button class="btn btn-outline-info btn-sm" data-source="1" ><i class="fa fa-pen fa-1" aria-hidden="true"><a href="/add">Add New Item +</a></i></button>
+            <script>
+                const swap = document.querySelectorAll('#ButtonRemove');
+                Array.from(swap).forEach(button => {
+                    button.addEventListener('click', function() {
+                        const confirmationDiv = this.parentNode.nextElementSibling;
+                        confirmationDiv.style.display = 'block';
+                        this.parentNode.style.display = 'none';
+                    });
+                });
+            </script>
+            <!-- <script>
+                let swap = document.getElementById('ButtonRemove');
+                swap.addEventListener('click',function(){
+                    document.getElementById("confirmation_div").style.display = "block";
+                    document.getElementById("remove").style.display = "none";
+                })
+            </script> -->
+        </tbody>
+    </table>
+{% endblock %}
